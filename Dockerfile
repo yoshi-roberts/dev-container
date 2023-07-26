@@ -1,12 +1,18 @@
 FROM alpine:latest
 
-WORKDIR /proj
-
 # Update and install packages.
 RUN apk update && apk upgrade
 RUN apk add --no-cache \
-xauth mesa mesa-utils mesa-gl mesa-dri-gallium \
+doas shadow xauth mesa mesa-utils mesa-gl mesa-dri-gallium \
 go gcc neovim git fish starship tmux nodejs npm curl lua5.3
+
+# User
+RUN adduser -D dev -G wheel
+RUN echo "permit nopass :wheel" > /etc/doas.d/doas.conf
+COPY passwd /etc/passwd
+USER dev
+
+WORKDIR /home/dev/proj
 
 # Starship Prompt
 RUN mkdir -p ~/.config
@@ -14,8 +20,7 @@ RUN mkdir -p ~/.config/fish && echo "starship init fish | source" >> ~/.config/f
 RUN starship preset nerd-font-symbols -o ~/.config/starship.toml
 
 # Config Files
-RUN git clone https://gitlab.com/Moncii/minimal.nvim.git
-RUN mkdir -p ~/.config && mv minimal.nvim ~/.config/nvim
+RUN git clone https://gitlab.com/Moncii/minimal.nvim.git ~/.config/nvim
 
 ENV DISPLAY=:0
 ENTRYPOINT ["fish"]
