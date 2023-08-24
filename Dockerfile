@@ -14,12 +14,18 @@ USER dev
 
 WORKDIR /home/dev/proj
 
-# Starship Prompt
+# Config Files
 RUN mkdir -p ~/.config
+
+# Starship Prompt
 RUN mkdir -p ~/.config/fish && echo "starship init fish | source" >> ~/.config/fish/config.fish
 RUN starship preset nerd-font-symbols -o ~/.config/starship.toml
 
-# Config Files
+# Tmux
+RUN mkdir ~/.config/tmux
+COPY tmux.conf /home/dev/.config/tmux/tmux.conf
+
+# Nvim
 RUN git clone https://gitlab.com/Moncii/minimal.nvim.git ~/.config/nvim
 
 ENV DISPLAY=:0
