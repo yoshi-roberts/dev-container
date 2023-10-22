@@ -9,7 +9,7 @@ However, this requires running the container on a linux system running an x serv
 
 ### Included
 
-> Note that this is all running on a alpine linux base image.
+> Note that this is all running on a arch linux base image.
 
 
 The shell is [fish](https://fishshell.com/) running the [starship](https://starship.rs/) prompt.<br>
@@ -19,6 +19,7 @@ The following is also included.
 
 - go
 - lua
+- love
 - gcc
 - python
 - node
@@ -36,7 +37,7 @@ docker build . -t dev:latest
 
 #### Initial Run
 ```
-docker run --name=dev --net host -v /tmp/.X11-unix:/tmp/.X11-unix/ --privileged -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority -v ~/proj:/proj -it dev:latest
+docker run --name=dev --net host -v /tmp/.X11-unix:/tmp/.X11-unix/ --privileged -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority -v ~/HostFolder:/proj -it dev:latest
 ```
 
 #### Starting

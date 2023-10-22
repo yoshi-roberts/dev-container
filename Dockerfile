@@ -1,32 +1,27 @@
-FROM alpine:latest
+FROM archlinux:latest
 
 # Update and install packages.
-RUN apk update && apk upgrade
-RUN apk add --no-cache \
-doas shadow xauth mesa mesa-utils mesa-gl mesa-dri-gallium \
-go gcc neovim git fish starship tmux nodejs npm curl lua5.3
+RUN pacman-key --init
+RUN pacman -Syu --noconfirm
+RUN pacman -S --noconfirm \
+bash xorg-xauth sudo curl wget git fish unzip \
+go gcc zig nodejs npm lua make \
+jre-openjdk jdk-openjdk \
+mesa mesa-utils \
+neovim love
 
-# User
-RUN adduser -D dev -G wheel
-RUN echo "permit nopass :wheel" > /etc/doas.d/doas.conf
-COPY passwd /etc/passwd
-USER dev
+RUN pacman -Scc --noconfirm
 
-WORKDIR /home/dev/proj
+WORKDIR /proj
 
-# Config Files
-RUN mkdir -p ~/.config
+# Install LazyVim config.
+RUN git clone https://github.com/LazyVim/starter ~/.config/nvim
+RUN rm -rf ~/.config/nvim/.git
 
-# Starship Prompt
-RUN mkdir -p ~/.config/fish && echo "starship init fish | source" >> ~/.config/fish/config.fish
-RUN starship preset nerd-font-symbols -o ~/.config/starship.toml
-
-# Tmux
-RUN mkdir ~/.config/tmux
-COPY tmux.conf /home/dev/.config/tmux/tmux.conf
-
-# Nvim
-RUN git clone https://gitlab.com/Moncii/minimal.nvim.git ~/.config/nvim
+# Starship
+RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
+RUN mkdir ~/.config/fish && touch ~/.config/fish/config.fish \
+echo 'starship init fish | source' >> ~/.config/fish/config.fish
 
 ENV DISPLAY=:0
 ENTRYPOINT ["fish"]
