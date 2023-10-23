@@ -4,7 +4,7 @@ FROM archlinux:latest
 RUN pacman-key --init
 RUN pacman -Syu --noconfirm
 RUN pacman -S --noconfirm \
-bash xorg-xauth sudo curl wget git fish unzip \
+bash pkgconf xorg-xauth sudo curl wget git fish unzip \
 go gcc zig nodejs npm lua make \
 jre-openjdk jdk-openjdk \
 mesa mesa-utils \
