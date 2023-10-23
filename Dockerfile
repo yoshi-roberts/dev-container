@@ -20,8 +20,8 @@ RUN rm -rf ~/.config/nvim/.git
 
 # Starship
 RUN curl -sS https://starship.rs/install.sh | sh -s -- -y
-RUN mkdir ~/.config/fish && touch ~/.config/fish/config.fish \
-echo 'starship init fish | source' >> ~/.config/fish/config.fish
+RUN mkdir ~/.config/fish && touch ~/.config/fish/config.fish
+RUN echo 'starship init fish | source' >> ~/.config/fish/config.fish
 
 ENV DISPLAY=:0
 ENTRYPOINT ["fish"]
