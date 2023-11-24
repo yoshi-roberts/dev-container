@@ -32,12 +32,14 @@ The following is also included.
 
 #### Build
 ```
-docker build . -t dev:latest
+docker build -t dev:latest \
+      --build-arg USER_ID=$(id -u) \
+      --build-arg GROUP_ID=$(id -g) .
 ```
 
 #### Initial Run
 ```
-docker run --name=dev --net host -v /tmp/.X11-unix:/tmp/.X11-unix/ --privileged -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority -v ~/HostFolder:/proj -it dev:latest
+docker run --name=dev --net host -v /tmp/.X11-unix:/tmp/.X11-unix/ --privileged -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority --mount "type=bind,src=/home/$(whoami)/Dir,dst=/proj" -it dev:latest
 ```
 
 #### Starting
