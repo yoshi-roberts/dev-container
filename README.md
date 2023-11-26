@@ -37,9 +37,19 @@ docker build -t dev:latest \
       --build-arg GROUP_ID=$(id -g) .
 ```
 
-#### Initial Run
+#### Initial Run (X11)
 ```
-docker run --name=dev --net host -v /tmp/.X11-unix:/tmp/.X11-unix/ --privileged -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority --mount "type=bind,src=/home/$(whoami)/Dir,dst=/proj" -it dev:latest
+docker run --name=dev --net host -v /tmp/.X11-unix/X1:/tmp/.X11-unix/ --privileged -v $XAUTHORITY:/tmp/.XAuthority -e XAUTHORITY=/tmp/.XAuthority --mount "type=bind,src=/home/$(whoami)/Dir,dst=/proj" -it dev:latest
+```
+
+#### Initial Run (Wayland)
+```
+docker run --name=dev --net host \
+      -e XDG_RUNTIME_DIR=/tmp \
+      -e WAYLAND_DISPLAY=$WAYLAND_DISPLAY \
+      -v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/tmp/$WAYLAND_DISPLAY \
+      --mount "type=bind,src=/home/$(whoami)/Documents/Projects,dst=/proj" \
+      -it dev:latest
 ```
 
 #### Starting
