@@ -2,9 +2,11 @@
 # Update system and install packages.
 sudo apt update -y
 sudo apt upgrade -y
-sudo apt install -y \
+sudo apt install -y software-properties-common && \
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt update -y && sudo apt install -y \
 net-tools pkg-config software-properties-common curl wget git zsh unzip tmux \
-gcc meson nodejs npm golang-go python3 lua5.3 make cmake default-jdk \
+neovim gcc meson nodejs npm golang-go python3 lua5.3 make cmake default-jdk \
 xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
 libxxf86vm-dev libasound2-dev libglu1-mesa-dev \
