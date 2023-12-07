@@ -4,7 +4,7 @@ sudo apt update -y
 sudo apt upgrade -y
 sudo apt install -y software-properties-common && \
 sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt update -y && apt install -y \
+sudo apt update -y && sudo apt install -y \
 net-tools pkg-config curl wget git zsh unzip tmux neovim \
 gcc meson nodejs npm golang-go python3 lua5.3 make cmake default-jdk \
 xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
