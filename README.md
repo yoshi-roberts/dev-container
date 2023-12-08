@@ -2,14 +2,10 @@
 
 This is my development environment inside a docker container.<br>
 This allows you to not clutter your host system with project dependencies and tools.<br>
-Also, this stops you from freezing your host system with shitty code!<br>
 
 ### Included
 
-The shell is [fish](https://fishshell.com/) running the [starship](https://starship.rs/) prompt.<br>
-The editor is [neovim](https://neovim.io/) using my own config.<br>
-
-The following is also included.
+The following tools are included.
 
 - go
 - lua
@@ -19,6 +15,10 @@ The following is also included.
 - node
 - npm
 - git
+- neovim
+
+The shell is [zsh](https://en.wikipedia.org/wiki/Z_shell)<br>
+Neovim is using the [LazyVim](https://www.lazyvim.org/) configuration.<br>
 
 > These are just the tools I use. You can add whatever you like.
 
@@ -33,7 +33,7 @@ docker build -t dev:latest \
 
 #### Initial Run
 ```
-docker run --name=dev --net=host --mount "type=bind,src=/home/$(whoami)/Dir,dst=/proj" -it dev:latest
+docker run --name=dev --net=host --mount type=bind,source=/home/"$(whoami)"/Dir,target=/home/user/proj -it dev:latest
 ```
 
 #### Starting
