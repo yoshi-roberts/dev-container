@@ -45,6 +45,7 @@ RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
 
 # Tmux
 RUN git clone https://gitlab.com/Moncii/tmux-config.git ~/.config/tmux
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # LazyVim
 RUN git clone https://github.com/LazyVim/starter ~/.config/nvim
