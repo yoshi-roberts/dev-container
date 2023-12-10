@@ -18,7 +18,7 @@ The following tools are included.
 - neovim
 
 The shell is [zsh](https://en.wikipedia.org/wiki/Z_shell)<br>
-Neovim is using the [LazyVim](https://www.lazyvim.org/) configuration.<br>
+Neovim is using the [AstroNvim](https://astronvim.com/) configuration.<br>
 
 > These are just the tools I use. You can add whatever you like.
 

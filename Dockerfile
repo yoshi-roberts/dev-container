@@ -26,7 +26,7 @@ RUN apt-get update -y && apt-get install nodejs -y
 RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
 RUN dpkg -i ripgrep_13.0.0_amd64.deb && rm ripgrep_13.0.0_amd64.deb
 
-# Craete user.
+# Create user.
 RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID --shell /bin/sh user
 RUN usermod -aG sudo user
@@ -47,8 +47,8 @@ RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
 RUN git clone https://gitlab.com/Moncii/tmux-config.git ~/.config/tmux
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# LazyVim
-RUN git clone https://github.com/LazyVim/starter ~/.config/nvim
+# AstroVim
+RUN git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 RUN rm -rf ~/.config/nvim/.git
 
 WORKDIR /home/user/proj
