@@ -10,7 +10,7 @@ RUN apt install -y software-properties-common && \
 add-apt-repository ppa:neovim-ppa/unstable
 RUN apt update -y && apt install -y \
 pkg-config sudo bash curl wget git zsh tmux neovim unzip \
-gcc meson golang-go python3 lua5.3 make cmake default-jdk \
+gcc meson golang-go python3 lua5.3 make cmake openjdk-17-jdk \
 xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
 libxxf86vm-dev libasound2-dev libglu1-mesa-dev \

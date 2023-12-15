@@ -5,15 +5,15 @@ This allows you to not clutter your host system with project dependencies and to
 
 ### Included
 
-The following tools are included.
+These are some of the included tools:
 
 - go
-- lua
-- gcc
-- zig
-- python
 - node
 - npm
+- zig
+- gcc
+- python
+- lua
 - git
 - neovim
 
@@ -25,18 +25,19 @@ Neovim is using the [AstroNvim](https://astronvim.com/) configuration.<br>
 ### Using
 
 #### Build
-```
+```zsh
 docker build -t dev:latest \
       --build-arg USER_ID=$(id -u) \
       --build-arg GROUP_ID=$(id -g) .
 ```
 
 #### Initial Run
-```
+```zsh
 docker run --name=dev --net=host --mount type=bind,source=/home/"$(whoami)"/Dir,target=/home/user/proj -it dev:latest
 ```
 
 #### Starting
-```
+```zsh
 docker start -i dev
 ```
+
