@@ -47,9 +47,8 @@ RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
 RUN git clone https://gitlab.com/Moncii/tmux-config.git ~/.config/tmux
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# AstroVim
-RUN git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
-RUN rm -rf ~/.config/nvim/.git
+# Nvim Config
+RUN git clone https://gitlab.com/Moncii/nvim-config ~/.config/nvim
 
 WORKDIR /home/user/proj
 
