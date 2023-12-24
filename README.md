@@ -33,7 +33,7 @@ docker build -t dev:latest \
 
 #### Initial Run
 ```zsh
-docker run --name=dev --net=host --mount type=bind,source=/home/"$(whoami)"/Dir,target=/home/user/proj -it dev:latest
+docker run --name=dev --net=host -e "TERM=xterm-256color" --mount type=bind,source=/home/"$(whoami)"/Dir,target=/home/user/proj -it dev:latest
 ```
 
 #### Starting
