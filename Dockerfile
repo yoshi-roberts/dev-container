@@ -9,7 +9,7 @@ RUN apt upgrade -y
 RUN apt install -y software-properties-common && \
 add-apt-repository ppa:neovim-ppa/unstable
 RUN apt update -y && apt install -y \
-pkg-config sudo bash curl wget git zsh tmux neovim unzip \
+pkg-config sudo bash curl wget git zsh tmux neovim unzip exa bat \
 gcc meson golang-go python3 lua5.3 make cmake openjdk-17-jdk \
 xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
@@ -37,7 +37,7 @@ USER user
 RUN mkdir ~/.config
 
 # ZSH
-RUN git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 RUN git clone https://gitlab.com/Moncii/zsh-config.git ~/.config/zsh
 RUN ln -s ~/.config/zsh/zshrc ~/.zshrc
 RUN echo export LC_ALL=en_IN.UTF-8 >> $HOME/.profile
@@ -52,4 +52,4 @@ RUN git clone https://gitlab.com/Moncii/nvim-config ~/.config/nvim
 
 WORKDIR /home/user/proj
 
-ENTRYPOINT ["zsh"]
+ENTRYPOINT ["tmux -u"]
