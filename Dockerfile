@@ -10,11 +10,18 @@ RUN apt install -y software-properties-common && \
 add-apt-repository ppa:neovim-ppa/unstable
 RUN apt update -y && apt install -y \
 pkg-config apt-utils sudo bash curl wget git zsh tmux neovim unzip exa bat \
-gcc meson golang-go python3 lua5.3 make cmake openjdk-17-jdk \
+locales gcc meson golang-go python3 lua5.3 make cmake openjdk-17-jdk \
 xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
 libxxf86vm-dev libasound2-dev libglu1-mesa-dev \
 mesa-common-dev xorg-dev
+
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
 
 # Get more up to date Node version.
 RUN mkdir -p /etc/apt/keyrings
@@ -28,7 +35,7 @@ RUN dpkg -i ripgrep_13.0.0_amd64.deb && rm ripgrep_13.0.0_amd64.deb
 
 # Create user.
 RUN addgroup --gid $GROUP_ID user
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID --shell /bin/sh user
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID --shell /usr/bin/zsh user
 RUN usermod -aG sudo user
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER user
@@ -53,4 +60,4 @@ RUN git clone https://gitlab.com/Moncii/nvim-config ~/.config/nvim
 
 WORKDIR /home/user/proj
 
-ENTRYPOINT ["zsh"]
+ENTRYPOINT ["tmux", "-u"]
