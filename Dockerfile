@@ -3,6 +3,8 @@ FROM ubuntu:latest
 ARG USER_ID
 ARG GROUP_ID
 
+ENV TERM=xterm-256color
+
 # Update system and install packages.
 RUN apt update -y
 RUN apt upgrade -y
@@ -42,8 +44,6 @@ USER user
 
 ### Configs ###
 RUN mkdir ~/.config
-
-RUN sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)" -y -f
 
 # ZSH
 RUN git clone https://gitlab.com/Moncii/zsh-config.git ~/.config/zsh

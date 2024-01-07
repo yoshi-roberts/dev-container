@@ -18,7 +18,6 @@ These are some of the included tools:
 - neovim
 
 The shell is [zsh](https://en.wikipedia.org/wiki/Z_shell)<br>
-Neovim is using the [AstroNvim](https://astronvim.com/) configuration.<br>
 
 > These are just the tools I use. You can add whatever you like.
 
@@ -34,7 +33,7 @@ docker build -t dev:latest \
 
 #### Initial Run
 ```zsh
-docker run --name=dev -e "TERM=xterm-256color" \
+docker run --name=dev \
     --mount type=bind,source=/home/"$(whoami)"/Dir,target=/home/user/proj \
     -it dev:latest
 ```
