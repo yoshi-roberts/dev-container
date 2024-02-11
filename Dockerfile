@@ -11,14 +11,14 @@ RUN apt upgrade -y
 RUN apt install -y software-properties-common && \
 add-apt-repository ppa:neovim-ppa/unstable
 RUN apt update -y && apt install -y \
-pkg-config apt-utils sudo bash curl wget git zsh tmux neovim unzip exa bat \
-locales gcc meson golang-go python3 lua5.3 make cmake openjdk-17-jdk \
+pkg-config apt-utils sudo bash curl wget zip git zsh tmux neovim unzip exa bat \
+locales gcc meson golang-go python3 python3.10-venv lua5.3 make cmake openjdk-17-jdk \
 xsel xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
 libxxf86vm-dev libasound2-dev libglu1-mesa-dev \
 mesa-common-dev xorg-dev
 
-# Set the locale
+# Set the locale.
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
 ENV LANG en_US.UTF-8  

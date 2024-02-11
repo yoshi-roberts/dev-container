@@ -1,25 +1,25 @@
 ### About
 
-This is my development environment inside a docker container.<br>
-This allows you to not clutter your host system with project dependencies and tools.<br>
+My development environment inside a docker container.<br>
+This allows me to not clutter my host system with project dependencies and tools.<br>
 
 ### Included
 
 These are some of the included tools:
 
 - go
-- node
-- npm
-- zig
 - gcc
-- python
-- lua
 - git
+- lua
+- npm
+- node
+- java
+- make
+- cmake
+- python
 - neovim
 
 The shell is [zsh](https://en.wikipedia.org/wiki/Z_shell)<br>
-
-> These are just the tools I use. You can add whatever you like.
 
 ### Using
 
