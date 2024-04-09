@@ -1,7 +1,8 @@
 ### About
 
 My development environment inside a docker container.<br>
-This allows me to not clutter my host system with project dependencies and tools.<br>
+Useful for not cluttering the host system with project dependencies and tools.<br>
+> Note: This will not work on Windows due to the way volumes and user permissions are handled.
 
 ### Included
 
@@ -9,8 +10,8 @@ These are some of the included tools:
 
 - go
 - gcc
-- git
 - lua
+- git
 - npm
 - node
 - java
@@ -31,14 +32,18 @@ docker build -t dev:latest \
       --network=host .
 ```
 
-#### Initial Run
+#### Initial Start
+
+Replace [DIR] with the directory you want to mount.
 ```zsh
 docker run --name=dev \
-    --mount type=bind,source=/home/"$(whoami)"/Dir,target=/home/user/proj \
+    --mount type=bind,source=[DIR],target=/home/user/proj \
     -it dev:latest
 ```
 
 #### Starting
+
+Use this command to start the container after the initial start.
 ```zsh
 docker start -i dev
 ```

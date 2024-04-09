@@ -8,8 +8,8 @@ ENV TERM=xterm-256color
 # Update system and install packages.
 RUN apt update -y
 RUN apt upgrade -y
-RUN apt install -y software-properties-common && \
-add-apt-repository ppa:neovim-ppa/unstable
+RUN apt install -y software-properties-common
+RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt update -y && apt install -y \
 pkg-config apt-utils sudo bash curl wget zip git zsh tmux neovim unzip exa bat \
 locales gcc meson golang-go python3 python3.10-venv lua5.3 make cmake openjdk-17-jdk \
@@ -36,7 +36,6 @@ RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripg
 RUN dpkg -i ripgrep_13.0.0_amd64.deb && rm ripgrep_13.0.0_amd64.deb
 
 # Create user.
-RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID --shell /usr/bin/zsh user
 RUN usermod -aG sudo user
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -46,17 +45,17 @@ USER user
 RUN mkdir ~/.config
 
 # ZSH
-RUN git clone https://gitlab.com/Moncii/zsh-config.git ~/.config/zsh
+RUN git clone https://gitlab.com/ezri_roberts/zsh-config.git ~/.config/zsh
 RUN ln -s ~/.config/zsh/zshrc ~/.zshrc
 RUN echo export LC_ALL=en_IN.UTF-8 >> $HOME/.profile
 RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
 
 # Tmux
-RUN git clone https://gitlab.com/Moncii/tmux-config.git ~/.config/tmux
+RUN git clone https://gitlab.com/ezri_roberts/tmux-config.git ~/.config/tmux
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Nvim Config
-RUN git clone https://gitlab.com/Moncii/nvim-config ~/.config/nvim
+RUN git clone https://gitlab.com/ezri_roberts/nvim-config ~/.config/nvim
 
 WORKDIR /home/user/proj
 
