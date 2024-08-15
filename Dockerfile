@@ -11,7 +11,7 @@ RUN apt upgrade -y
 RUN apt install -y software-properties-common
 RUN add-apt-repository ppa:neovim-ppa/unstable
 RUN apt update -y && apt install -y \
-pkg-config apt-utils sudo bash curl wget zip git zsh tmux neovim unzip exa bat \
+pkg-config apt-utils sudo bash curl wget zip git zsh tmux stow neovim lf trash-cli unzip exa bat \
 locales gcc meson golang-go python3 python3.10-venv lua5.3 make cmake openjdk-17-jdk \
 xsel xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
@@ -36,22 +36,22 @@ RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripg
 RUN dpkg -i ripgrep_13.0.0_amd64.deb && rm ripgrep_13.0.0_amd64.deb
 
 # Create user.
+RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID --shell /usr/bin/zsh user
 RUN usermod -aG sudo user
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER user
 
 ### Configs ###
-RUN mkdir ~/.config
+RUN git clone https://github.com/ezri-roberts/dotfiles.git ~/dotfiles
+RUN cd ~/dotfiles && stow .
 
 # ZSH
-RUN git clone https://gitlab.com/ezri_roberts/zsh-config.git ~/.config/zsh
-RUN ln -s ~/.config/zsh/zshrc ~/.zshrc
-RUN echo export LC_ALL=en_IN.UTF-8 >> $HOME/.profile
-RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
+#RUN echo export LC_ALL=en_IN.UTF-8 >> $HOME/.profile
+#RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
 
 # Tmux
-RUN git clone https://gitlab.com/ezri_roberts/tmux-config.git ~/.config/tmux
+RUN git clone https://github.com/ezri-roberts/tmux-config.git ~/.config/tmux
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Nvim Config
