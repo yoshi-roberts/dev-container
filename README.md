@@ -20,7 +20,7 @@ These are some of the included tools:
 - python
 - neovim
 
-The shell is [zsh](https://en.wikipedia.org/wiki/Z_shell)<br>
+Uses [zsh](https://en.wikipedia.org/wiki/Z_shell).<br>
 
 ### Using
 
@@ -36,8 +36,10 @@ docker build -t dev:latest \
 
 Replace [DIR] with the directory you want to mount.
 ```zsh
-docker run --name=dev \
-    --mount type=bind,source=[DIR],target=/home/user/proj \
+docker run \
+    --name=dev \
+    -p 8000:8000 \
+    --mount type=bind,source=[DIR],target=/home/dev/proj \
     -it dev:latest
 ```
 

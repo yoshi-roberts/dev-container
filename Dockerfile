@@ -1,4 +1,5 @@
 FROM ubuntu:latest
+RUN touch /var/mail/ubuntu && chown ubuntu /var/mail/ubuntu && userdel -r ubuntu
 
 ARG USER_ID
 ARG GROUP_ID
@@ -10,17 +11,18 @@ RUN apt update -y
 RUN apt upgrade -y
 RUN apt install -y software-properties-common
 RUN add-apt-repository ppa:neovim-ppa/unstable
+
 RUN apt update -y && apt install -y \
-pkg-config apt-utils sudo bash curl wget zip git zsh tmux stow neovim lf trash-cli unzip exa bat \
-locales gcc meson golang-go python3 python3.10-venv lua5.3 make cmake openjdk-17-jdk \
+pkg-config apt-utils sudo bash curl wget zip unzip git \
+zsh tmux stow neovim lf trash-cli eza bat ripgrep \
+locales gcc meson golang-go python3 python3-venv lua5.3 make cmake openjdk-17-jdk \
 xsel xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
 libxxf86vm-dev libasound2-dev libglu1-mesa-dev \
 mesa-common-dev xorg-dev
 
 # Set the locale.
-RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
-    locale-gen
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8
@@ -31,32 +33,29 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg -
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update -y && apt-get install nodejs -y
 
-# Ripgrep
-RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
-RUN dpkg -i ripgrep_13.0.0_amd64.deb && rm ripgrep_13.0.0_amd64.deb
-
 # Create user.
-RUN addgroup --gid $GROUP_ID user
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID --shell /usr/bin/zsh user
-RUN usermod -aG sudo user
+RUN groupadd --gid $GROUP_ID dev
+RUN adduser --disabled-password --gecos '' -uid $USER_ID --gid $GROUP_ID --shell /usr/bin/zsh dev
+RUN usermod -aG sudo dev
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER user
+USER dev
 
 ### Configs ###
-RUN git clone https://github.com/ezri-roberts/dotfiles.git ~/dotfiles
-RUN cd ~/dotfiles && stow .
+RUN mkdir -p ~/.config
+RUN git clone -b dev-env https://github.com/ezri-roberts/dotfiles.git ~/dotfiles
+RUN cd ~/dotfiles && stow . && cd
 
-# ZSH
-#RUN echo export LC_ALL=en_IN.UTF-8 >> $HOME/.profile
-#RUN echo export LANG=en_IN.UTF-8 >> $HOME/.profile
+# FZF
+RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+RUN yes | ~/.fzf/install
 
 # Tmux
 RUN git clone https://github.com/ezri-roberts/tmux-config.git ~/.config/tmux
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Nvim Config
-RUN git clone https://gitlab.com/ezri_roberts/nvim-config ~/.config/nvim
+RUN git clone https://github.com/ezri-roberts/nvim-config.git ~/.config/nvim
 
-WORKDIR /home/user/proj
+WORKDIR /home/dev/proj
 
 ENTRYPOINT ["tmux", "-u"]
