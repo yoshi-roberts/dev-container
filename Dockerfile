@@ -14,7 +14,8 @@ RUN add-apt-repository ppa:neovim-ppa/unstable
 
 RUN apt update -y && apt install -y \
 pkg-config apt-utils sudo bash curl wget zip unzip git \
-zsh tmux stow neovim lf trash-cli eza bat ripgrep \
+zsh tmux stow neovim trash-cli eza bat ripgrep \
+ruby-full build-essential zlib1g-dev \
 locales gcc meson golang-go python3 python3-venv lua5.3 make cmake openjdk-17-jdk \
 xsel xauth libglfw3 libglfw3-dev libc6-dev libgl1-mesa-dev \
 libxcursor-dev libxi-dev libxinerama-dev libxrandr-dev \
@@ -49,13 +50,13 @@ RUN cd ~/dotfiles && stow . && cd
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 RUN yes | ~/.fzf/install
 
-# Tmux
-RUN git clone https://github.com/ezri-roberts/tmux-config.git ~/.config/tmux
-RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# Add ruby to path
+RUN echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc
+RUN echo 'export PATH=$PATH:$HOME/gems/bin' >> ~/.zshrc
 
 # Nvim Config
 RUN git clone https://github.com/ezri-roberts/nvim-config.git ~/.config/nvim
 
 WORKDIR /home/dev/proj
 
-ENTRYPOINT ["tmux", "-u"]
+ENTRYPOINT ["zsh"]

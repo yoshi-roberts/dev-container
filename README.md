@@ -15,6 +15,7 @@ These are some of the included tools:
 - npm
 - node
 - java
+- ruby
 - make
 - cmake
 - python
@@ -28,8 +29,7 @@ Uses [zsh](https://en.wikipedia.org/wiki/Z_shell).<br>
 ```zsh
 docker build -t dev:latest \
       --build-arg USER_ID=$(id -u) \
-      --build-arg GROUP_ID=$(id -g) \
-      --network=host .
+      --build-arg GROUP_ID=$(id -g) .
 ```
 
 #### Initial Start
@@ -37,8 +37,8 @@ docker build -t dev:latest \
 Replace [DIR] with the directory you want to mount.
 ```zsh
 docker run \
+    --network host \
     --name=dev \
-    -p 8000:8000 \
     --mount type=bind,source=[DIR],target=/home/dev/proj \
     -it dev:latest
 ```
