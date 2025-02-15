@@ -39,6 +39,7 @@ RUN groupadd --gid $GROUP_ID dev
 RUN adduser --disabled-password --gecos '' -uid $USER_ID --gid $GROUP_ID --shell /usr/bin/zsh dev
 RUN usermod -aG sudo dev
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN chsh -s /usr/bin/zhs dev
 USER dev
 
 ### Configs ###
