@@ -44,8 +44,11 @@ USER dev
 
 ### Configs ###
 RUN mkdir -p ~/.config
-RUN git clone -b dev-env https://github.com/ezri-roberts/dotfiles.git ~/dotfiles
+RUN git clone -b dev-env https://github.com/yoshi-roberts/dotfiles.git ~/dotfiles
 RUN cd ~/dotfiles && stow . && cd
+
+# Starship Prompt
+curl -sS https://starship.rs/install.sh | sh
 
 # FZF
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -56,7 +59,7 @@ RUN echo 'export GEM_HOME="$HOME/gems"' >> ~/.zshrc
 RUN echo 'export PATH=$PATH:$HOME/gems/bin' >> ~/.zshrc
 
 # Nvim Config
-RUN git clone https://github.com/ezri-roberts/nvim-config.git ~/.config/nvim
+RUN git clone https://github.com/yoshi-roberts/nvim-config.git ~/.config/nvim
 
 WORKDIR /home/dev/proj
 
